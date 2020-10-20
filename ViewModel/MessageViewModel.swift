@@ -11,17 +11,16 @@ import CoreData
 
 class MessageViewModel {
     weak var messageDelegate:MessageDelegate?
-    let friendManageer = FriendManager()
+    let friendManager = FriendManager()
     
-    var messages:[Message]?
-    
-    //    let coreData = CoreDataManager()
-    //
-    //    let context =
+    var messages = [Message]()
     
     func setupData() {
         
         CoreDataManager.shared.setupCoreDataSingleton()
+        
+        CoreDataManager.shared.clearData(type: [Message](), entityName: "Message")
+              
         
         let mark = NSEntityDescription.insertNewObject(forEntityName: "Friend", into: CoreDataManager.shared.selfContext) as! Friend
         
@@ -42,16 +41,15 @@ class MessageViewModel {
         CoreDataManager.shared.saveContext()
         
         
-        friendManageer.loadMessagesFromFriend()
+        friendManager.loadMessagesFromFriend()
         
-        messages = friendManageer.messages
+        messages = friendManager.messages
         
 //        messages =  CoreDataManager.shared.loadData(entityName: "Message", array: self.messages)
 
-//                CoreDataManager.shared.clearData(type: self.messages!, entityName: "Message")
-        
-        guard let messagesUnwrapped = messages else {return}
-        self.messageDelegate?.setupMessages(messages: messagesUnwrapped)
+              
+//        guard let messagesUnwrapped = messages else {return}
+        self.messageDelegate?.setupMessages(messages: messages)
         
     }
     
