@@ -29,6 +29,30 @@ class FriendManager {
         
     }
     
+   class  func loadMessagesFromFriend(friend:Friend) -> [Message] {
+        
+            let fetchRequestMessage :NSFetchRequest<Message> = Message.fetchRequest()
+            fetchRequestMessage.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+            fetchRequestMessage.predicate = NSPredicate(format: "friend.name = %@", friend.name!)
+            
+            
+            do {
+                let fetchMessages = try (CoreDataManager.shared.selfContext.fetch(fetchRequestMessage))
+                for message in fetchMessages {
+                    
+                   print(message)
+                }
+                return fetchMessages
+                
+            } catch {
+                print(error)
+            }
+            
+        
+        
+        return [Message]()
+    }
+    
     func loadMessagesFromFriend(){
         
         

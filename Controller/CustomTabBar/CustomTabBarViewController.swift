@@ -17,8 +17,6 @@ class CustomTabBarViewController: UITabBarController {
         
         let flowLayout = UICollectionViewFlowLayout()
                
-              
-        
         let recentViewController = createTabBarItems(viewController: RecentCollectionViewController(collectionViewLayout:flowLayout), name: "Recent", imageName: "recent")
         
         viewControllers = [
@@ -34,10 +32,10 @@ extension CustomTabBarViewController {
         
         let navigationController = UINavigationController(rootViewController: viewController)
         
-        viewController.navigationItem.title = name
-        viewController.tabBarItem.title = name
-        viewController.tabBarItem.image = UIImage(named: imageName)
-        viewController.view.backgroundColor = .white
+        navigationController.navigationItem.title = name
+        navigationController.tabBarItem.title = name
+        navigationController.tabBarItem.image = UIImage(named: imageName)
+        navigationController.view.backgroundColor = .white
         
         return navigationController
         

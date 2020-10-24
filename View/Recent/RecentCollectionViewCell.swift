@@ -93,7 +93,9 @@ class RecentCollectionViewCell: BaseCollectionViewCell {
         didSet {
             
             backgroundColor = isHighlighted ? UIColor(red: 0, green: 134/255, blue: 249/255, alpha: 1) : UIColor.clear
-            print(isHighlighted)
+            friendNameLabel.textColor = isHighlighted ? UIColor.white : UIColor.black
+            timeLabel.textColor = isHighlighted ? UIColor.white : UIColor.black
+            messageLabel.textColor = isHighlighted ? UIColor.white : UIColor.black
         }
     }
     
