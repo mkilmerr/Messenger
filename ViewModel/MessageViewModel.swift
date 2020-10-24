@@ -67,6 +67,8 @@ class MessageViewModel {
           self.createMessageWithText(text: "Hello from White House", friend: hillary, minutesAgo: 1, context: CoreDataManager.shared.selfContext)
         
         
+        
+        
         CoreDataManager.shared.saveContext()
         
         

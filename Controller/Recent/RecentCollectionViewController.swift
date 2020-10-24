@@ -10,6 +10,7 @@ import UIKit
 
 class RecentCollectionViewController: UICollectionViewController {
  
+
     let messageViewModel = MessageViewModel()
     var messages = [Message]()
     let cellIdentifier = "RecentCollectionViewCell"

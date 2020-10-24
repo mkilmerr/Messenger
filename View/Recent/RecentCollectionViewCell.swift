@@ -89,6 +89,14 @@ class RecentCollectionViewCell: BaseCollectionViewCell {
        
     }
     
+    override var isHighlighted: Bool{
+        didSet {
+            
+            backgroundColor = isHighlighted ? UIColor(red: 0, green: 134/255, blue: 249/255, alpha: 1) : UIColor.clear
+            print(isHighlighted)
+        }
+    }
+    
     override func setupViews() {
         
         addSubview(profileImage)
