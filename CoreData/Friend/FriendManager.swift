@@ -11,7 +11,7 @@ import CoreData
 
 class FriendManager {
     var messages = [Message]()
-    
+    var friendNames = [String]()
     
     func fetchFriends() -> [Friend] {
         let fetchRequestFriend = NSFetchRequest<NSFetchRequestResult>(entityName: "Friend")
@@ -38,14 +38,15 @@ class FriendManager {
             fetchRequestMessage.predicate = NSPredicate(format: "friend.name = %@", friend.name!)
             fetchRequestMessage.fetchLimit = 1
             
+           
             do {
                 let fetchMessages = try (CoreDataManager.shared.selfContext.fetch(fetchRequestMessage)) 
                 
                 for message in fetchMessages {
+                 
                     self.messages.append(message)
                 }
-                //self.messages.append(contentsOf: fetchMessages ?? [])
-                
+                CoreDataManager.shared.saveContext()
             } catch {
 
             }
@@ -53,6 +54,29 @@ class FriendManager {
             
         }
         
+        self.messages = filterMessages(messages)
+        
+    }
+    func filterMessages(_ messages: [Message]) -> [Message] {
+        
+        var arrayOfFilterMessages = [Message]()
+        
+        messages.forEach { (message) in
+            
+            friendNames.append((message.friend?.name)!)
+        }
+        
+        
+        let objectSet = Set(friendNames.map { $0 })
+        
+        let array = Array(objectSet)
+        
+        array.forEach { (friend) in
+            let index = messages.lastIndex{$0.friend?.name == friend}
+            arrayOfFilterMessages.append(messages[index!])
+        }
+        
+        return arrayOfFilterMessages
         
         
     }

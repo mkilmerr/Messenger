@@ -9,7 +9,7 @@
 import UIKit
 
 class RecentCollectionViewController: UICollectionViewController {
-    
+ 
     let messageViewModel = MessageViewModel()
     var messages = [Message]()
     let cellIdentifier = "RecentCollectionViewCell"
@@ -22,8 +22,9 @@ class RecentCollectionViewController: UICollectionViewController {
         self.messageViewModel.setupData()
         
         self.configureCollectionView()
+     
+       
     }
-    
     
     
 }
@@ -32,7 +33,6 @@ extension RecentCollectionViewController: MessageDelegate {
     func setupMessages(messages: [Message]) {
         self.messages = messages
     }
-    
     
 }
 

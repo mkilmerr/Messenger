@@ -51,14 +51,14 @@ class CoreDataManager {
     
     func clearData<T>(type:[T],entityName:String) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-        
-
+      
+       
         do {
             let objects = try (selfContext.fetch(fetchRequest)) as? [T]
 
-            objects?.forEach({ (element) in
-                selfContext.delete(element as! NSManagedObject)
-            })
+            for element in objects! {
+                self.selfContext.delete(element as! NSManagedObject)
+            }
 
              self.saveContext()
 

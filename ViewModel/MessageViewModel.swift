@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import CoreData
 
 class MessageViewModel {
@@ -15,12 +16,32 @@ class MessageViewModel {
     
     var messages = [Message]()
     
+    func clearData() {
+       let delegate = UIApplication.shared.delegate as? AppDelegate
+        if let context =  delegate?.persistentContainer.viewContext {
+            do {
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
+               
+             let messages = try (context.fetch(fetchRequest)) as? [Message]
+                
+                for message in messages! {
+                    context.delete(message)
+                }
+                try (context.save())
+            }catch {
+                
+            }
+        }
+    }
     func setupData() {
+        
+        clearData()
         
         CoreDataManager.shared.setupCoreDataSingleton()
         
-        CoreDataManager.shared.clearData(type: [Message](), entityName: "Message")
-              
+//        CoreDataManager.shared.clearData(type: [Message](), entityName: "Message")
+        
+      
         
         let mark = NSEntityDescription.insertNewObject(forEntityName: "Friend", into: CoreDataManager.shared.selfContext) as! Friend
         
@@ -32,10 +53,18 @@ class MessageViewModel {
         gandhi.name = "Gandhi"
         gandhi.profileImageName = "gandhi"
         
+        let hillary = NSEntityDescription.insertNewObject(forEntityName: "Friend", into: CoreDataManager.shared.selfContext) as! Friend
+        
+        hillary.name = "Hillary Clinton"
+        hillary.profileImageName = "hillary_profile"
+        
         
         self.createMessageWithText(text: "Hello my friends", friend: gandhi, minutesAgo: 2, context: CoreDataManager.shared.selfContext)
         
         self.createMessageWithText(text: "Hello from my FACEBOOK", friend: mark, minutesAgo: 1, context: CoreDataManager.shared.selfContext)
+        
+     
+          self.createMessageWithText(text: "Hello from White House", friend: hillary, minutesAgo: 1, context: CoreDataManager.shared.selfContext)
         
         
         CoreDataManager.shared.saveContext()
