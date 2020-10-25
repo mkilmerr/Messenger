@@ -74,7 +74,7 @@ extension RecentCollectionViewController: UICollectionViewDelegateFlowLayout{
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let flowLayout = UICollectionViewFlowLayout()
-        
+        flowLayout.minimumLineSpacing = 80
         let chatCollectionViewController = ChatCollectionViewController(collectionViewLayout: flowLayout)
         chatCollectionViewController.friend = self.messages[indexPath.row].friend
         

@@ -22,6 +22,7 @@ class ChatCollectionViewController: UICollectionViewController,UICollectionViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView.alwaysBounceVertical = true
+        self.collectionView.delegate = self
         self.collectionView.backgroundColor = .white
         self.collectionView!.register(ChatCollectionViewCell.self, forCellWithReuseIdentifier: ChatCollectionViewCell.identifier)
 
@@ -35,9 +36,10 @@ class ChatCollectionViewController: UICollectionViewController,UICollectionViewD
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChatCollectionViewCell.identifier, for: indexPath) as! ChatCollectionViewCell
+        
     
         cell.setupCell(self.messages[indexPath.row])
-       
+        
     
         return cell
     }
@@ -49,11 +51,15 @@ class ChatCollectionViewController: UICollectionViewController,UICollectionViewD
             let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
             let estimatedFrame = NSString(string: messageText).boundingRect(with: size, options: options, attributes: nil, context: nil)
             
-            return CGSize(width: view.frame.width, height: estimatedFrame.height + 20)
+            return CGSize(width: view.frame.width, height: estimatedFrame.height + (estimatedFrame.height * 0.7))
         }
         return CGSize(width: view.frame.width, height: 100)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 85
+    }
 
-   
+  
 
 }

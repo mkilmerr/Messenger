@@ -32,6 +32,7 @@ extension CustomTabBarViewController {
         
         let navigationController = UINavigationController(rootViewController: viewController)
         
+        
         navigationController.navigationItem.title = name
         navigationController.tabBarItem.title = name
         navigationController.tabBarItem.image = UIImage(named: imageName)
