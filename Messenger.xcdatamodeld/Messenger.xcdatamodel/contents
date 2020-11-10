@@ -7,11 +7,12 @@
     </entity>
     <entity name="Message" representedClassName="Message" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="isSender" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <relationship name="friend" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Friend" inverseName="message" inverseEntity="Friend"/>
     </entity>
     <elements>
         <element name="Friend" positionX="-93.99609375" positionY="-297.2890625" width="128" height="88"/>
-        <element name="Message" positionX="274.80859375" positionY="-82.60546875" width="128" height="88"/>
+        <element name="Message" positionX="274.80859375" positionY="-82.60546875" width="128" height="103"/>
     </elements>
 </model>

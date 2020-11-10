@@ -80,8 +80,9 @@ class RecentCollectionViewCell: BaseCollectionViewCell {
             
             self.messageLabel.text = message.text
             self.friendNameLabel.text = friendName
+            self.hasReadMessageImage.image = UIImage(named: profileImageName)
             self.profileImage.image = UIImage(named: profileImageName)
-             self.timeLabel.text = dateFormatter.string(from: messageDate)
+            self.timeLabel.text = dateFormatter.string(from: messageDate)
             
         }
         

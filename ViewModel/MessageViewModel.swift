@@ -71,6 +71,8 @@ class MessageViewModel {
 
         self.createMessageWithText(text: "Hello hell", friend: hillary, minutesAgo: 1, context: CoreDataManager.shared.selfContext)
         
+         self.createMessageWithText(text: "Sender message", friend: hillary, minutesAgo: 1, context: CoreDataManager.shared.selfContext,isSender: true)
+        
         
         CoreDataManager.shared.saveContext()
         
@@ -88,13 +90,14 @@ class MessageViewModel {
     }
     
     
-    func createMessageWithText(text:String, friend:Friend, minutesAgo:Double, context: NSManagedObjectContext) {
+    func createMessageWithText(text:String, friend:Friend, minutesAgo:Double, context: NSManagedObjectContext, isSender:Bool = false ) {
         
         let message = NSEntityDescription.insertNewObject(forEntityName: "Message", into: context) as! Message
         
         message.friend = friend
         message.text = text
         message.date = NSDate().addingTimeInterval(minutesAgo*60) as Date
+        message.isSender = NSNumber(booleanLiteral: isSender)
         
     }
 }

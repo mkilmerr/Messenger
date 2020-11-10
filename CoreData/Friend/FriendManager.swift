@@ -38,10 +38,6 @@ class FriendManager {
             
             do {
                 let fetchMessages = try (CoreDataManager.shared.selfContext.fetch(fetchRequestMessage))
-                for message in fetchMessages {
-                    
-                   print(message)
-                }
                 return fetchMessages
                 
             } catch {

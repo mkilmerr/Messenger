@@ -38,6 +38,12 @@ class ChatCollectionViewCell: BaseCollectionViewCell {
         return view
     }()
     
+    lazy var bubbleImage:UIImage  = {
+       let image = UIImage(named:"bubble_gray")
+        
+        return image!
+    }()
+    
     override func setupViews() {
         addSubview(profileImage)
         addSubview(bubbleView)
@@ -46,6 +52,7 @@ class ChatCollectionViewCell: BaseCollectionViewCell {
         
     }
     
+   
     override func setupConstraints() {
         
         NSLayoutConstraint.activate([
@@ -75,5 +82,14 @@ class ChatCollectionViewCell: BaseCollectionViewCell {
         guard let profile =  message.friend?.profileImageName else {return}
         profileImage.image = UIImage(named: profile)
         messageTextView.text = message.text
+        
+        
+        if message.isSender != false {
+            profileImage.isHidden = true
+            messageTextView.textColor = .white
+            bubbleView.backgroundColor = UIColor(red: 0, green: 134/255, blue: 249/255, alpha: 1)
+
+                        
+        }
     }
 }
