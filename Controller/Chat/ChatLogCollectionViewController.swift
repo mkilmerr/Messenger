@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChatCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
+class ChatCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout,UITextFieldDelegate {
     var bottomContraints:NSLayoutConstraint?
     
     let messageTextView = MessageTextUIView()
@@ -26,6 +26,7 @@ class ChatCollectionViewController: UICollectionViewController,UICollectionViewD
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.delegate = self
         self.collectionView.backgroundColor = .white
+        self.messageTextView.messageTextField.delegate = self
         self.collectionView!.register(ChatCollectionViewCell.self, forCellWithReuseIdentifier: ChatCollectionViewCell.identifier)
         
         setupMessageTextUIView()
@@ -92,8 +93,14 @@ class ChatCollectionViewController: UICollectionViewController,UICollectionViewD
                                  didSelectItemAt indexPath: IndexPath) {
       
         self.messageTextView.messageTextField.endEditing(true)
-         self.messageTextView.removeFromSuperview()
+        self.messageTextView.removeFromSuperview()
         setupMessageTextUIView()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.messageTextView.removeFromSuperview()
+        setupMessageTextUIView()
+        return true
     }
 
 }
