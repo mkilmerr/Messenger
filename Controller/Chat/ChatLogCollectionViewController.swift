@@ -9,6 +9,16 @@
 import UIKit
 
 class ChatCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout,UITextFieldDelegate {
+    
+    let messageViewModel = MessageViewModel()
+    
+    lazy var sendButton: UIBarButtonItem = {
+        let sendButton = UIBarButtonItem(title: "Send", style: .done, target: self, action: #selector(sendButtonDidTapped))
+        return sendButton
+    }()
+    
+    var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+    
     var bottomContraints:NSLayoutConstraint?
     
     let messageTextView = MessageTextUIView()
@@ -30,7 +40,7 @@ class ChatCollectionViewController: UICollectionViewController,UICollectionViewD
         self.collectionView!.register(ChatCollectionViewCell.self, forCellWithReuseIdentifier: ChatCollectionViewCell.identifier)
         
         setupMessageTextUIView()
-        
+        self.messageTextView.sendButtonToolBar.setItems([self.flexibleSpaceButton,self.sendButton], animated: false)
         self.messageTextView.messageTextField.addTarget(self, action: #selector(messageTextFieldDidTapped), for: .allEvents)
         
         
@@ -39,6 +49,11 @@ class ChatCollectionViewController: UICollectionViewController,UICollectionViewD
     @objc func messageTextFieldDidTapped() {
         bottomContraints = NSLayoutConstraint(item: self.messageTextView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: -self.messageTextView.keyboardHeight)
            self.view.addConstraint(bottomContraints!)
+        
+        let indexPath = NSIndexPath(item: self.messages.count, section: 0)
+        self.collectionView.scrollToItem(at: indexPath as IndexPath, at: .bottom, animated: true)
+        
+        self.collectionView.reloadData()
         
     }
     
@@ -56,6 +71,19 @@ class ChatCollectionViewController: UICollectionViewController,UICollectionViewD
          messageTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
        
+    }
+    
+    @objc func sendButtonDidTapped() {
+        if let message = self.messageTextView.messageTextField.text, let friend = self.messages[0].friend {
+            if !message.isEmpty {
+                let newMessage = self.messageViewModel.createMessageWithTextWithReturn(text: message, friend: friend, minutesAgo: 1, context: CoreDataManager.shared.selfContext, isSender: true)
+                self.messages.append(newMessage)
+                self.messageTextView.messageTextField.text?.removeAll()
+                self.collectionView.reloadData()
+                self.messageTextView.removeFromSuperview()
+                setupMessageTextUIView()
+            }
+        }
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -100,4 +100,16 @@ class MessageViewModel {
         message.isSender = NSNumber(booleanLiteral: isSender)
         
     }
+    
+    func createMessageWithTextWithReturn(text:String, friend:Friend, minutesAgo:Double, context: NSManagedObjectContext, isSender:Bool = false) -> Message {
+        
+        let message = NSEntityDescription.insertNewObject(forEntityName: "Message", into: context) as! Message
+        
+        message.friend = friend
+        message.text = text
+        message.date = NSDate().addingTimeInterval(minutesAgo*60) as Date
+        message.isSender = NSNumber(booleanLiteral: isSender)
+        
+        return message
+    }
 }

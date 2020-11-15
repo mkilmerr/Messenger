@@ -23,19 +23,12 @@ class MessageTextUIView: UIView {
        let toolBar = UIToolbar()
         toolBar.barStyle = .default
         toolBar.isTranslucent = true
-        
-        let sendButton = UIBarButtonItem(title: "Send", style: .done, target: self, action: #selector(sendButtonDidTapped))
-       var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
-        toolBar.setItems([flexibleSpaceButton,sendButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         toolBar.sizeToFit()
         return toolBar
     }()
     
-    @objc func sendButtonDidTapped() {
-        
-    }
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
