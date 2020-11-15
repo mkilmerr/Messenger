@@ -51,7 +51,7 @@ class ChatCollectionViewController: UICollectionViewController,UICollectionViewD
         view.addSubview(messageTextView)
         NSLayoutConstraint.activate([
          messageTextView.widthAnchor.constraint(equalTo: view.widthAnchor),
-         messageTextView.heightAnchor.constraint(equalToConstant: 30),
+         messageTextView.heightAnchor.constraint(equalToConstant: 40),
          messageTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
        

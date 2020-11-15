@@ -13,14 +13,33 @@ class MessageTextUIView: UIView {
     
     lazy var messageTextField: UITextField = {
        let textField = UITextField()
-        textField.placeholder = "Type a Message"
+        textField.placeholder = "Enter a message"
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.inputAccessoryView = self.sendButtonToolBar
         return textField
     }()
     
+    lazy var sendButtonToolBar: UIToolbar = {
+       let toolBar = UIToolbar()
+        toolBar.barStyle = .default
+        toolBar.isTranslucent = true
+        
+        let sendButton = UIBarButtonItem(title: "Send", style: .done, target: self, action: #selector(sendButtonDidTapped))
+       var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        toolBar.setItems([flexibleSpaceButton,sendButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        toolBar.sizeToFit()
+        return toolBar
+    }()
+    
+    @objc func sendButtonDidTapped() {
+        
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .red
+        backgroundColor = .white
         translatesAutoresizingMaskIntoConstraints = false
         setupViews()
         setupConstraints()
@@ -38,7 +57,7 @@ class MessageTextUIView: UIView {
                 let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
                 
                 self.keyboardHeight = isKeyboardShowing ? keyboardFrame.cgRectValue.height : 0
-                print(isKeyboardShowing)
+                
             }
            
         }
@@ -53,6 +72,9 @@ class MessageTextUIView: UIView {
     }
     
     func setupConstraints() {
-        
+        NSLayoutConstraint.activate([
+            messageTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+            messageTextField.widthAnchor.constraint(equalTo: self.widthAnchor)
+        ])
     }
 }
