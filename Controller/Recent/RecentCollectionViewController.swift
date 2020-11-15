@@ -27,6 +27,11 @@ class RecentCollectionViewController: UICollectionViewController {
        
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tabBarController?.tabBar.isHidden = false 
+    }
+    
     
 }
 

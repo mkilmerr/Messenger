@@ -9,7 +9,9 @@
 import UIKit
 
 class ChatCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
-
+    var bottomContraints:NSLayoutConstraint?
+    
+    let messageTextView = MessageTextUIView()
     var friend: Friend? {
         didSet {
             navigationItem.title = friend?.name
@@ -25,8 +27,34 @@ class ChatCollectionViewController: UICollectionViewController,UICollectionViewD
         self.collectionView.delegate = self
         self.collectionView.backgroundColor = .white
         self.collectionView!.register(ChatCollectionViewCell.self, forCellWithReuseIdentifier: ChatCollectionViewCell.identifier)
-
-     
+        
+        setupMessageTextUIView()
+        
+        self.messageTextView.messageTextField.addTarget(self, action: #selector(messageTextFieldDidTapped), for: .allEvents)
+        
+        
+    }
+    
+    @objc func messageTextFieldDidTapped() {
+        bottomContraints = NSLayoutConstraint(item: self.messageTextView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: -self.messageTextView.keyboardHeight)
+           self.view.addConstraint(bottomContraints!)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+        
+    }
+    
+    func setupMessageTextUIView() {
+        view.addSubview(messageTextView)
+        NSLayoutConstraint.activate([
+         messageTextView.widthAnchor.constraint(equalTo: view.widthAnchor),
+         messageTextView.heightAnchor.constraint(equalToConstant: 30),
+         messageTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+       
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -60,6 +88,12 @@ class ChatCollectionViewController: UICollectionViewController,UICollectionViewD
         return 85
     }
 
-  
+    override func collectionView(_ collectionView: UICollectionView,
+                                 didSelectItemAt indexPath: IndexPath) {
+      
+        self.messageTextView.messageTextField.endEditing(true)
+         self.messageTextView.removeFromSuperview()
+        setupMessageTextUIView()
+    }
 
 }
